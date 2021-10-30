@@ -9,8 +9,8 @@ import (
 
 type Kategoriler struct {
     KategorilerID int    `json:"KategorilerID"`
-    ad string `json:"ad"`
-    slug string `json:"slug"`
+    Ad string `json:"Ad"`
+    Slug string `json:"Slug"`
 }
 
 func KategorilerCreateTable() {
@@ -20,8 +20,8 @@ func KategorilerCreateTable() {
         CREATE TABLE IF NOT EXISTS Kategoriler
         (
             KategorilerID INTEGER PRIMARY KEY,
-            ad TEXT,
-            slug TEXT
+            Ad TEXT,
+            Slug TEXT
         )
     `)
     statement.Exec()

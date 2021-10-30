@@ -15,8 +15,8 @@ func UrunlerAdd(c echo.Context) error {
 	defer db.Close()
 	mdl := &model.Urunler{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("INSERT INTO Urunler (ad, fiyat, resim, aciklama, kategoriId) VALUES (?, ?, ?, ?, ?)")
-	statement.Exec(mdl.ad, mdl.fiyat, mdl.resim, mdl.aciklama, mdl.kategoriId)
+	statement, _ := db.Prepare("INSERT INTO Urunler (Ad, Fiyat, Resim, Aciklama, KategoriID) VALUES (?, ?, ?, ?, ?)")
+	statement.Exec(mdl.Ad, mdl.Fiyat, mdl.Resim, mdl.Aciklama, mdl.KategoriID)
 	defer statement.Close()
 	return c.JSON(http.StatusCreated, mdl)
 }
@@ -24,12 +24,12 @@ func UrunlerAdd(c echo.Context) error {
 func UrunlerList(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT UrunlerID, ad, fiyat, resim, aciklama, kategoriId FROM Urunler")
+	rows, _ := db.Query("SELECT UrunlerID, Ad, Fiyat, Resim, Aciklama, KategoriID FROM Urunler")
 	defer rows.Close()
 	mdl := []model.Urunler{}
 	for rows.Next() {
 		item := model.Urunler{}
-		rows.Scan(&item.UrunlerID, &item.ad, &item.fiyat, &item.resim, &item.aciklama, &item.kategoriId)
+		rows.Scan(&item.UrunlerID, &item.Ad, &item.Fiyat, &item.Resim, &item.Aciklama, &item.KategoriID)
 		mdl = append(mdl, item)
 	}
 	return c.JSON(http.StatusOK, mdl)
@@ -43,8 +43,8 @@ func UrunlerGet(c echo.Context) error {
 		panic(err.Error())
 	}
 	mdl := model.Urunler{}
-	statement, _ := db.Prepare("SELECT UrunlerID, ad, fiyat, resim, aciklama, kategoriId FROM Urunler WHERE UrunlerID = ?")
-	err = statement.QueryRow(id).Scan(&mdl.UrunlerID, &mdl.ad, &mdl.fiyat, &mdl.resim, &mdl.aciklama, &mdl.kategoriId)
+	statement, _ := db.Prepare("SELECT UrunlerID, Ad, Fiyat, Resim, Aciklama, KategoriID FROM Urunler WHERE UrunlerID = ?")
+	err = statement.QueryRow(id).Scan(&mdl.UrunlerID, &mdl.Ad, &mdl.Fiyat, &mdl.Resim, &mdl.Aciklama, &mdl.KategoriID)
 	defer statement.Close()
 	if err == sql.ErrNoRows {
 		return c.NoContent(http.StatusNotFound)
@@ -79,8 +79,8 @@ func UrunlerSet(c echo.Context) error {
 	}
 	mdl := &model.Urunler{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("UPDATE Urunler SET ad = ?, fiyat = ?, resim = ?, aciklama = ?, kategoriId = ? WHERE UrunlerID = ?")
-	statement.Exec(mdl.ad, mdl.fiyat, mdl.resim, mdl.aciklama, mdl.kategoriId, id)
+	statement, _ := db.Prepare("UPDATE Urunler SET Ad = ?, Fiyat = ?, Resim = ?, Aciklama = ?, KategoriID = ? WHERE UrunlerID = ?")
+	statement.Exec(mdl.Ad, mdl.Fiyat, mdl.Resim, mdl.Aciklama, mdl.KategoriID, id)
 	defer statement.Close()
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())

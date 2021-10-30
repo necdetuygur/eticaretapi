@@ -9,11 +9,11 @@ import (
 
 type Kullanicilar struct {
     KullanicilarID int    `json:"KullanicilarID"`
-    ad string `json:"ad"`
-    soyad string `json:"soyad"`
-    eposta string `json:"eposta"`
-    sifre string `json:"sifre"`
-    rol string `json:"rol"`
+    Ad string `json:"Ad"`
+    Soyad string `json:"Soyad"`
+    Eposta string `json:"Eposta"`
+    Sifre string `json:"Sifre"`
+    Rol string `json:"Rol"`
 }
 
 func KullanicilarCreateTable() {
@@ -23,11 +23,11 @@ func KullanicilarCreateTable() {
         CREATE TABLE IF NOT EXISTS Kullanicilar
         (
             KullanicilarID INTEGER PRIMARY KEY,
-            ad TEXT,
-            soyad TEXT,
-            eposta TEXT,
-            sifre TEXT,
-            rol TEXT
+            Ad TEXT,
+            Soyad TEXT,
+            Eposta TEXT,
+            Sifre TEXT,
+            Rol TEXT
         )
     `)
     statement.Exec()

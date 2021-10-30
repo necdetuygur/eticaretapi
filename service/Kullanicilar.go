@@ -15,8 +15,8 @@ func KullanicilarAdd(c echo.Context) error {
 	defer db.Close()
 	mdl := &model.Kullanicilar{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("INSERT INTO Kullanicilar (ad, soyad, eposta, sifre, rol) VALUES (?, ?, ?, ?, ?)")
-	statement.Exec(mdl.ad, mdl.soyad, mdl.eposta, mdl.sifre, mdl.rol)
+	statement, _ := db.Prepare("INSERT INTO Kullanicilar (Ad, Soyad, Eposta, Sifre, Rol) VALUES (?, ?, ?, ?, ?)")
+	statement.Exec(mdl.Ad, mdl.Soyad, mdl.Eposta, mdl.Sifre, mdl.Rol)
 	defer statement.Close()
 	return c.JSON(http.StatusCreated, mdl)
 }
@@ -24,12 +24,12 @@ func KullanicilarAdd(c echo.Context) error {
 func KullanicilarList(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT KullanicilarID, ad, soyad, eposta, sifre, rol FROM Kullanicilar")
+	rows, _ := db.Query("SELECT KullanicilarID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanicilar")
 	defer rows.Close()
 	mdl := []model.Kullanicilar{}
 	for rows.Next() {
 		item := model.Kullanicilar{}
-		rows.Scan(&item.KullanicilarID, &item.ad, &item.soyad, &item.eposta, &item.sifre, &item.rol)
+		rows.Scan(&item.KullanicilarID, &item.Ad, &item.Soyad, &item.Eposta, &item.Sifre, &item.Rol)
 		mdl = append(mdl, item)
 	}
 	return c.JSON(http.StatusOK, mdl)
@@ -43,8 +43,8 @@ func KullanicilarGet(c echo.Context) error {
 		panic(err.Error())
 	}
 	mdl := model.Kullanicilar{}
-	statement, _ := db.Prepare("SELECT KullanicilarID, ad, soyad, eposta, sifre, rol FROM Kullanicilar WHERE KullanicilarID = ?")
-	err = statement.QueryRow(id).Scan(&mdl.KullanicilarID, &mdl.ad, &mdl.soyad, &mdl.eposta, &mdl.sifre, &mdl.rol)
+	statement, _ := db.Prepare("SELECT KullanicilarID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanicilar WHERE KullanicilarID = ?")
+	err = statement.QueryRow(id).Scan(&mdl.KullanicilarID, &mdl.Ad, &mdl.Soyad, &mdl.Eposta, &mdl.Sifre, &mdl.Rol)
 	defer statement.Close()
 	if err == sql.ErrNoRows {
 		return c.NoContent(http.StatusNotFound)
@@ -79,8 +79,8 @@ func KullanicilarSet(c echo.Context) error {
 	}
 	mdl := &model.Kullanicilar{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("UPDATE Kullanicilar SET ad = ?, soyad = ?, eposta = ?, sifre = ?, rol = ? WHERE KullanicilarID = ?")
-	statement.Exec(mdl.ad, mdl.soyad, mdl.eposta, mdl.sifre, mdl.rol, id)
+	statement, _ := db.Prepare("UPDATE Kullanicilar SET Ad = ?, Soyad = ?, Eposta = ?, Sifre = ?, Rol = ? WHERE KullanicilarID = ?")
+	statement.Exec(mdl.Ad, mdl.Soyad, mdl.Eposta, mdl.Sifre, mdl.Rol, id)
 	defer statement.Close()
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
