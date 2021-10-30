@@ -7,9 +7,9 @@ import (
 )
 
 func TodoRouter(e *echo.Echo) {
-	e.POST("/todo", service.TodoAdd)
-	e.GET("/todo", service.TodoList)
-	e.GET("/todo/:id", service.TodoGet)
-	e.DELETE("/todo/:id", service.TodoDelete)
-	e.PUT("/todo/:id", service.TodoSet)
+	e.POST("/Todo", service.TodoAdd)
+	e.GET("/Todo", service.TodoList)
+	e.GET("/Todo/:id", service.TodoGet)
+	e.DELETE("/Todo/:id", service.TodoDelete)
+	e.PUT("/Todo/:id", service.TodoSet)
 }
