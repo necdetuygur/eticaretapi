@@ -1,4 +1,4 @@
-table = "urunler";
+table = "Urunler";
 cols = ["ad", "fiyat", "resim", "aciklama", "kategoriId"];
 
 /**/

@@ -1,4 +1,4 @@
-table = "kullanicilar";
+table = "Kullanicilar";
 cols = ["ad", "soyad", "eposta", "sifre", "rol"];
 
 /**/

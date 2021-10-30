@@ -1,4 +1,4 @@
-table = "kategoriler";
+table = "Kategoriler";
 cols = ["ad", "slug"];
 
 /**/
