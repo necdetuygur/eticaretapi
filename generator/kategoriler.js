@@ -1,5 +1,5 @@
 table = "Kategoriler";
-cols = ["ad", "slug"];
+cols = ["Ad", "Slug"];
 
 /**/
 structRows = [];

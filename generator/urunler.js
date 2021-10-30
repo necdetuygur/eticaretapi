@@ -1,5 +1,5 @@
 table = "Urunler";
-cols = ["ad", "fiyat", "resim", "aciklama", "kategoriId"];
+cols = ["Ad", "Fiyat", "Resim", "Aciklama", "KategoriID"];
 
 /**/
 structRows = [];
