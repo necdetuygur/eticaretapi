@@ -1,44 +1,45 @@
-table = "Urun";
-cols = ["Ad", "Fiyat", "Resim", "Aciklama", "KategoriID"];
+generator("Kullanici", ["Ad", "Soyad", "Eposta", "Sifre", "Rol"]);
+generator("Kategori", ["Ad", "Slug"]);
+generator("Urun", ["Ad", "Fiyat", "Resim", "Aciklama", "KategoriID"]);
 
-/**/
-structRows = [];
-tableRows = [];
-insertCols = [];
-updateCols = [];
-questionMarks = [];
-insertMdls = [];
-scanItems = [];
-scanMdls = [];
-cols.forEach((item) => {
-  structRows.push(`
+function generator(table, cols) {
+  structRows = [];
+  tableRows = [];
+  insertCols = [];
+  updateCols = [];
+  questionMarks = [];
+  insertMdls = [];
+  scanItems = [];
+  scanMdls = [];
+  cols.forEach((item) => {
+    structRows.push(`
     ${item} string \`json:"${item}"\``);
 
-  tableRows.push(`
+    tableRows.push(`
             ${item} TEXT`);
 
-  insertCols.push(item);
+    insertCols.push(item);
 
-  updateCols.push(`${item} = ?`);
+    updateCols.push(`${item} = ?`);
 
-  questionMarks.push("?");
+    questionMarks.push("?");
 
-  insertMdls.push(`mdl.${item}`);
+    insertMdls.push(`mdl.${item}`);
 
-  scanItems.push(`&item.${item}`);
+    scanItems.push(`&item.${item}`);
 
-  scanMdls.push(`&mdl.${item}`);
-});
-structRows = structRows.join("");
-tableRows = tableRows.join(",");
-insertCols = insertCols.join(", ");
-updateCols = updateCols.join(", ");
-questionMarks = questionMarks.join(", ");
-insertMdls = insertMdls.join(", ");
-scanItems = scanItems.join(", ");
-scanMdls = scanMdls.join(", ");
-/**/
-var model = `package model
+    scanMdls.push(`&mdl.${item}`);
+  });
+  structRows = structRows.join("");
+  tableRows = tableRows.join(",");
+  insertCols = insertCols.join(", ");
+  updateCols = updateCols.join(", ");
+  questionMarks = questionMarks.join(", ");
+  insertMdls = insertMdls.join(", ");
+  scanItems = scanItems.join(", ");
+  scanMdls = scanMdls.join(", ");
+  /**/
+  var model = `package model
 
 import (
     "database/sql"
@@ -64,7 +65,7 @@ func ${table}CreateTable() {
     defer statement.Close()
 }
 `;
-var router = `package router
+  var router = `package router
 
 import (
 	"eticaretapi/service"
@@ -80,7 +81,7 @@ func ${table}Router(e *echo.Echo) {
 	e.PUT("/${table}/:id", service.${table}Set)
 }
 `;
-var service = `package service
+  var service = `package service
 
 import (
 	"database/sql"
@@ -171,39 +172,39 @@ func ${table}Set(c echo.Context) error {
 }
 `;
 
-const fs = require("fs");
-// const path = require("path");
+  const fs = require("fs");
 
-// fs.mkdir(path.join(__dirname, "model"), (err) => {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log("model klasör oluşturuldu.");
-// });
+  fs.mkdir("model", (err) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log("model klasör oluşturuldu.");
+  });
 
-// fs.mkdir(path.join(__dirname, "router"), (err) => {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log("router klasör oluşturuldu.");
-// });
+  fs.mkdir("router", (err) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log("router klasör oluşturuldu.");
+  });
 
-// fs.mkdir(path.join(__dirname, "service"), (err) => {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log("service klasör oluşturuldu.");
-// });
+  fs.mkdir("service", (err) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log("service klasör oluşturuldu.");
+  });
 
-fs.writeFile(`./model/${table}.go`, model, function (e) {
-  if (e) throw e;
-  console.log(`${table} model oluşturuldu.`);
-});
-fs.writeFile(`./router/${table}.go`, router, function (e) {
-  if (e) throw e;
-  console.log(`${table} router oluşturuldu.`);
-});
-fs.writeFile(`./service/${table}.go`, service, function (e) {
-  if (e) throw e;
-  console.log(`${table} service oluşturuldu.`);
-});
+  fs.writeFile(`./model/${table}.go`, model, function (e) {
+    if (e) throw e;
+    console.log(`${table} model oluşturuldu.`);
+  });
+  fs.writeFile(`./router/${table}.go`, router, function (e) {
+    if (e) throw e;
+    console.log(`${table} router oluşturuldu.`);
+  });
+  fs.writeFile(`./service/${table}.go`, service, function (e) {
+    if (e) throw e;
+    console.log(`${table} service oluşturuldu.`);
+  });
+}
