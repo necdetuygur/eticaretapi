@@ -22,9 +22,16 @@ func KullaniciAdd(c echo.Context) error {
 }
 
 func KullaniciList(c echo.Context) error {
+	Eposta_sql := ""
+	if c.QueryParam("Eposta") != "" {
+		Eposta := c.QueryParam("Eposta")
+		Sifre := c.QueryParam("Sifre")
+		Eposta_sql += " AND Eposta = '" + Eposta + "' "
+		Eposta_sql += " AND Sifre = '" + Sifre + "' "
+	}
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT KullaniciID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanici")
+	rows, _ := db.Query("SELECT KullaniciID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanici WHERE 1 = 1" + Eposta_sql)
 	defer rows.Close()
 	mdl := []model.Kullanici{}
 	for rows.Next() {
