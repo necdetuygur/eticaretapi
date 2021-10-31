@@ -1,6 +1,7 @@
+# Notlar
 ```
-https://github.com/labstack/echo
-https://github.com/mattn/go-sqlite3
+go get -u https://github.com/labstack/echo
+go get -u https://github.com/mattn/go-sqlite3
 ```
 
 ```
