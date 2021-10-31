@@ -11,10 +11,9 @@ import (
 
 func main() {
 	// TABLO YOKSA OLUŞTUR METODLARI
-	model.TodoCreateTable()
-	model.UrunlerCreateTable()
-	model.KategorilerCreateTable()
-	model.KullanicilarCreateTable()
+	model.UrunCreateTable()
+	model.KategoriCreateTable()
+	model.KullaniciCreateTable()
 
 	e := echo.New()
 	e.Use(middleware.Logger())
@@ -25,10 +24,9 @@ func main() {
 	}))
 
 	// YÖNLENDİRİCİLER
-	router.TodoRouter(e)
-	router.UrunlerRouter(e)
-	router.KategorilerRouter(e)
-	router.KullanicilarRouter(e)
+	router.UrunRouter(e)
+	router.KategoriRouter(e)
+	router.KullaniciRouter(e)
 
 	e.Logger.Fatal(e.Start("0.0.0.0:" + config.PORT))
 }
