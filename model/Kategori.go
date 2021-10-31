@@ -7,21 +7,21 @@ import (
     _ "github.com/mattn/go-sqlite3"
 )
 
-type Todo struct {
-    TodoID int    `json:"TodoID"`
-    Baslik string `json:"Baslik"`
-    Icerik string `json:"Icerik"`
+type Kategori struct {
+    KategoriID int    `json:"KategoriID"`
+    Ad string `json:"Ad"`
+    Slug string `json:"Slug"`
 }
 
-func TodoCreateTable() {
+func KategoriCreateTable() {
     db, _ := sql.Open("sqlite3", config.DB_NAME)
     defer db.Close()
     statement, _ := db.Prepare(`
-        CREATE TABLE IF NOT EXISTS Todo
+        CREATE TABLE IF NOT EXISTS Kategori
         (
-            TodoID INTEGER PRIMARY KEY,
-            Baslik TEXT,
-            Icerik TEXT
+            KategoriID INTEGER PRIMARY KEY,
+            Ad TEXT,
+            Slug TEXT
         )
     `)
     statement.Exec()

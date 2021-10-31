@@ -10,41 +10,41 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func TodoAdd(c echo.Context) error {
+func KullaniciAdd(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	mdl := &model.Todo{}
+	mdl := &model.Kullanici{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("INSERT INTO Todo (Baslik, Icerik) VALUES (?, ?)")
-	statement.Exec(mdl.Baslik, mdl.Icerik)
+	statement, _ := db.Prepare("INSERT INTO Kullanici (Ad, Soyad, Eposta, Sifre, Rol) VALUES (?, ?, ?, ?, ?)")
+	statement.Exec(mdl.Ad, mdl.Soyad, mdl.Eposta, mdl.Sifre, mdl.Rol)
 	defer statement.Close()
 	return c.JSON(http.StatusCreated, mdl)
 }
 
-func TodoList(c echo.Context) error {
+func KullaniciList(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT TodoID, Baslik, Icerik FROM Todo")
+	rows, _ := db.Query("SELECT KullaniciID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanici")
 	defer rows.Close()
-	mdl := []model.Todo{}
+	mdl := []model.Kullanici{}
 	for rows.Next() {
-		item := model.Todo{}
-		rows.Scan(&item.TodoID, &item.Baslik, &item.Icerik)
+		item := model.Kullanici{}
+		rows.Scan(&item.KullaniciID, &item.Ad, &item.Soyad, &item.Eposta, &item.Sifre, &item.Rol)
 		mdl = append(mdl, item)
 	}
 	return c.JSON(http.StatusOK, mdl)
 }
 
-func TodoGet(c echo.Context) error {
+func KullaniciGet(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	mdl := model.Todo{}
-	statement, _ := db.Prepare("SELECT TodoID, Baslik, Icerik FROM Todo WHERE TodoID = ?")
-	err = statement.QueryRow(id).Scan(&mdl.TodoID, &mdl.Baslik, &mdl.Icerik)
+	mdl := model.Kullanici{}
+	statement, _ := db.Prepare("SELECT KullaniciID, Ad, Soyad, Eposta, Sifre, Rol FROM Kullanici WHERE KullaniciID = ?")
+	err = statement.QueryRow(id).Scan(&mdl.KullaniciID, &mdl.Ad, &mdl.Soyad, &mdl.Eposta, &mdl.Sifre, &mdl.Rol)
 	defer statement.Close()
 	if err == sql.ErrNoRows {
 		return c.NoContent(http.StatusNotFound)
@@ -54,14 +54,14 @@ func TodoGet(c echo.Context) error {
 	return c.JSON(http.StatusOK, mdl)
 }
 
-func TodoDelete(c echo.Context) error {
+func KullaniciDelete(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	statement, _ := db.Prepare("DELETE FROM Todo WHERE TodoID = ?")
+	statement, _ := db.Prepare("DELETE FROM Kullanici WHERE KullaniciID = ?")
 	statement.Exec(id)
 	defer statement.Close()
 	if err != nil {
@@ -70,17 +70,17 @@ func TodoDelete(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
-func TodoSet(c echo.Context) error {
+func KullaniciSet(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	mdl := &model.Todo{}
+	mdl := &model.Kullanici{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("UPDATE Todo SET Baslik = ?, Icerik = ? WHERE TodoID = ?")
-	statement.Exec(mdl.Baslik, mdl.Icerik, id)
+	statement, _ := db.Prepare("UPDATE Kullanici SET Ad = ?, Soyad = ?, Eposta = ?, Sifre = ?, Rol = ? WHERE KullaniciID = ?")
+	statement.Exec(mdl.Ad, mdl.Soyad, mdl.Eposta, mdl.Sifre, mdl.Rol, id)
 	defer statement.Close()
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())

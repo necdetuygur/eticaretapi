@@ -10,41 +10,41 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func KategorilerAdd(c echo.Context) error {
+func KategoriAdd(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	mdl := &model.Kategoriler{}
+	mdl := &model.Kategori{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("INSERT INTO Kategoriler (Ad, Slug) VALUES (?, ?)")
+	statement, _ := db.Prepare("INSERT INTO Kategori (Ad, Slug) VALUES (?, ?)")
 	statement.Exec(mdl.Ad, mdl.Slug)
 	defer statement.Close()
 	return c.JSON(http.StatusCreated, mdl)
 }
 
-func KategorilerList(c echo.Context) error {
+func KategoriList(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT KategorilerID, Ad, Slug FROM Kategoriler")
+	rows, _ := db.Query("SELECT KategoriID, Ad, Slug FROM Kategori")
 	defer rows.Close()
-	mdl := []model.Kategoriler{}
+	mdl := []model.Kategori{}
 	for rows.Next() {
-		item := model.Kategoriler{}
-		rows.Scan(&item.KategorilerID, &item.Ad, &item.Slug)
+		item := model.Kategori{}
+		rows.Scan(&item.KategoriID, &item.Ad, &item.Slug)
 		mdl = append(mdl, item)
 	}
 	return c.JSON(http.StatusOK, mdl)
 }
 
-func KategorilerGet(c echo.Context) error {
+func KategoriGet(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	mdl := model.Kategoriler{}
-	statement, _ := db.Prepare("SELECT KategorilerID, Ad, Slug FROM Kategoriler WHERE KategorilerID = ?")
-	err = statement.QueryRow(id).Scan(&mdl.KategorilerID, &mdl.Ad, &mdl.Slug)
+	mdl := model.Kategori{}
+	statement, _ := db.Prepare("SELECT KategoriID, Ad, Slug FROM Kategori WHERE KategoriID = ?")
+	err = statement.QueryRow(id).Scan(&mdl.KategoriID, &mdl.Ad, &mdl.Slug)
 	defer statement.Close()
 	if err == sql.ErrNoRows {
 		return c.NoContent(http.StatusNotFound)
@@ -54,14 +54,14 @@ func KategorilerGet(c echo.Context) error {
 	return c.JSON(http.StatusOK, mdl)
 }
 
-func KategorilerDelete(c echo.Context) error {
+func KategoriDelete(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	statement, _ := db.Prepare("DELETE FROM Kategoriler WHERE KategorilerID = ?")
+	statement, _ := db.Prepare("DELETE FROM Kategori WHERE KategoriID = ?")
 	statement.Exec(id)
 	defer statement.Close()
 	if err != nil {
@@ -70,16 +70,16 @@ func KategorilerDelete(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
-func KategorilerSet(c echo.Context) error {
+func KategoriSet(c echo.Context) error {
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		panic(err.Error())
 	}
-	mdl := &model.Kategoriler{}
+	mdl := &model.Kategori{}
 	c.Bind(mdl)
-	statement, _ := db.Prepare("UPDATE Kategoriler SET Ad = ?, Slug = ? WHERE KategorilerID = ?")
+	statement, _ := db.Prepare("UPDATE Kategori SET Ad = ?, Slug = ? WHERE KategoriID = ?")
 	statement.Exec(mdl.Ad, mdl.Slug, id)
 	defer statement.Close()
 	if err != nil {

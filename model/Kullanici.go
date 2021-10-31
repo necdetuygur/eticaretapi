@@ -7,8 +7,8 @@ import (
     _ "github.com/mattn/go-sqlite3"
 )
 
-type Kullanicilar struct {
-    KullanicilarID int    `json:"KullanicilarID"`
+type Kullanici struct {
+    KullaniciID int    `json:"KullaniciID"`
     Ad string `json:"Ad"`
     Soyad string `json:"Soyad"`
     Eposta string `json:"Eposta"`
@@ -16,13 +16,13 @@ type Kullanicilar struct {
     Rol string `json:"Rol"`
 }
 
-func KullanicilarCreateTable() {
+func KullaniciCreateTable() {
     db, _ := sql.Open("sqlite3", config.DB_NAME)
     defer db.Close()
     statement, _ := db.Prepare(`
-        CREATE TABLE IF NOT EXISTS Kullanicilar
+        CREATE TABLE IF NOT EXISTS Kullanici
         (
-            KullanicilarID INTEGER PRIMARY KEY,
+            KullaniciID INTEGER PRIMARY KEY,
             Ad TEXT,
             Soyad TEXT,
             Eposta TEXT,
