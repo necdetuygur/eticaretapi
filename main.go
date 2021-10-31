@@ -10,11 +10,12 @@ import (
 )
 
 func main() {
-	// TABLO YOKSA OLUŞTUR METODLARI
+	// VERİTABANINDA TABLO YOKSA OLUŞTUR METODLARI
 	model.UrunCreateTable()
 	model.KategoriCreateTable()
 	model.KullaniciCreateTable()
 
+	// WEB FRAMEWORK TANIMLAMALARI
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -23,10 +24,11 @@ func main() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	// YÖNLENDİRİCİLER
+	// WEB FRAMEWORK YÖNLENDİRİCİLERİ
 	router.UrunRouter(e)
 	router.KategoriRouter(e)
 	router.KullaniciRouter(e)
 
+	// WEB FRAMEWORK BAŞLAT
 	e.Logger.Fatal(e.Start("0.0.0.0:" + config.PORT))
 }
