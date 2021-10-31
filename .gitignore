@@ -1,3 +1,4 @@
 .vscode/*
 .DS_Store
 ETicaretApi.db
+__debug_bin
