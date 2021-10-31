@@ -32,4 +32,25 @@ func UrunCreateTable() {
     `)
 	statement.Exec()
 	defer statement.Close()
+	// statement2, _ := db.Prepare(`
+	// 	INSERT INTO
+	// 		Urun (Ad, Fiyat, Resim, Aciklama, KategoriID)
+	// 	VALUES
+	// 	(
+	// 		'iPhone 13',
+	// 		'19999.99',
+	// 		'https://picsum.photos/300/200?random=1635676170217',
+	// 		'iPhone 13',
+	// 		'1'
+	// 	),
+	// 	(
+	// 		'Parfüm',
+	// 		'19.99',
+	// 		'https://picsum.photos/300/200?random=1635676189133',
+	// 		'Parfüm',
+	// 		'2'
+	// 	)
+	// `)
+	// statement2.Exec()
+	// defer statement2.Close()
 }
