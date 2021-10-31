@@ -22,9 +22,14 @@ func UrunAdd(c echo.Context) error {
 }
 
 func UrunList(c echo.Context) error {
+	KategoriID_sql := ""
+	if c.QueryParam("KategoriID") != "" {
+		KategoriID, _ := strconv.Atoi(c.QueryParam("KategoriID"))
+		KategoriID_sql += " AND KategoriID = " + strconv.Itoa(KategoriID)
+	}
 	db, _ := sql.Open("sqlite3", config.DB_NAME)
 	defer db.Close()
-	rows, _ := db.Query("SELECT UrunID, Ad, Fiyat, Resim, Aciklama, KategoriID FROM Urun")
+	rows, _ := db.Query("SELECT UrunID, Ad, Fiyat, Resim, Aciklama, KategoriID FROM Urun WHERE 1 = 1" + KategoriID_sql)
 	defer rows.Close()
 	mdl := []model.Urun{}
 	for rows.Next() {
