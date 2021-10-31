@@ -4,8 +4,7 @@ https://github.com/mattn/go-sqlite3
 ```
 
 ```
-node generator/Todo.js
-node generator/Kategoriler.js
-node generator/Urunler.js
-node generator/Kullanicilar.js
+node generator/Kategori.js
+node generator/Urun.js
+node generator/Kullanici.js
 ```

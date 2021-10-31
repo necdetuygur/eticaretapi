@@ -1,5 +1,5 @@
-table = "Kategoriler";
-cols = ["Ad", "Slug"];
+table = "Urun";
+cols = ["Ad", "Fiyat", "Resim", "Aciklama", "KategoriID"];
 
 /**/
 structRows = [];
@@ -172,38 +172,38 @@ func ${table}Set(c echo.Context) error {
 `;
 
 const fs = require("fs");
-const path = require("path");
+// const path = require("path");
 
-fs.mkdir(path.join(__dirname, "model"), (err) => {
-  if (err) {
-    return console.error(err);
-  }
-  console.log("model klasör oluşturuldu.");
-});
+// fs.mkdir(path.join(__dirname, "model"), (err) => {
+//   if (err) {
+//     return console.error(err);
+//   }
+//   console.log("model klasör oluşturuldu.");
+// });
 
-fs.mkdir(path.join(__dirname, "router"), (err) => {
-  if (err) {
-    return console.error(err);
-  }
-  console.log("router klasör oluşturuldu.");
-});
+// fs.mkdir(path.join(__dirname, "router"), (err) => {
+//   if (err) {
+//     return console.error(err);
+//   }
+//   console.log("router klasör oluşturuldu.");
+// });
 
-fs.mkdir(path.join(__dirname, "service"), (err) => {
-  if (err) {
-    return console.error(err);
-  }
-  console.log("service klasör oluşturuldu.");
-});
+// fs.mkdir(path.join(__dirname, "service"), (err) => {
+//   if (err) {
+//     return console.error(err);
+//   }
+//   console.log("service klasör oluşturuldu.");
+// });
 
 fs.writeFile(`./model/${table}.go`, model, function (e) {
   if (e) throw e;
-  console.log("model oluşturuldu.");
+  console.log(`${table} model oluşturuldu.`);
 });
 fs.writeFile(`./router/${table}.go`, router, function (e) {
   if (e) throw e;
-  console.log("router oluşturuldu.");
+  console.log(`${table} router oluşturuldu.`);
 });
 fs.writeFile(`./service/${table}.go`, service, function (e) {
   if (e) throw e;
-  console.log("service oluşturuldu.");
+  console.log(`${table} service oluşturuldu.`);
 });
