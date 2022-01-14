@@ -4,6 +4,7 @@ import (
 	"eticaretapi/config"
 	"eticaretapi/model"
 	"eticaretapi/router"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -30,5 +31,11 @@ func main() {
 	router.KullaniciRouter(e)
 
 	// WEB FRAMEWORK BAŞLAT
-	e.Logger.Fatal(e.Start("0.0.0.0:" + config.PORT))
+	host := "localhost"
+	port := config.PORT
+	if os.Getenv("PORT") != "" {
+		host = "0.0.0.0"
+		port = os.Getenv("PORT")
+	}
+	e.Logger.Fatal(e.Start(host + ":" + port))
 }
