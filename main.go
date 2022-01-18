@@ -11,25 +11,32 @@ import (
 )
 
 func main() {
-	// VERİTABANINDA TABLO YOKSA OLUŞTUR METODLARI
+	// VERİ TABANINDA TABLO YOKSA OLUŞTUR METODLARI
 	model.UrunCreateTable()
 	model.KategoriCreateTable()
 	model.KullaniciCreateTable()
+	model.TodoCreateTable()
 
 	// WEB FRAMEWORK TANIMLAMALARI
-	e := echo.New()
-	e.HideBanner = true
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	ec := echo.New()
+	ec.HideBanner = true
+	ec.Use(middleware.Logger())
+	ec.Use(middleware.Recover())
+	ec.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
+
+	// WEB FRAMEWORK AUTH
+	ec.POST("/Login", Login)
+	e := ec.Group("")
+	e.Use(middleware.JWT([]byte(config.AUTH_JWT_TOKEN)))
 
 	// WEB FRAMEWORK YÖNLENDİRİCİLERİ
 	router.UrunRouter(e)
 	router.KategoriRouter(e)
 	router.KullaniciRouter(e)
+	router.TodoRouter(e)
 
 	// WEB FRAMEWORK BAŞLAT
 	host := "localhost"
@@ -38,5 +45,5 @@ func main() {
 		host = "0.0.0.0"
 		port = os.Getenv("PORT")
 	}
-	e.Logger.Fatal(e.Start(host + ":" + port))
+	ec.Logger.Fatal(ec.Start(host + ":" + port))
 }

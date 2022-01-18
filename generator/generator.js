@@ -1,6 +1,7 @@
 generator("Kullanici", ["Ad", "Soyad", "Eposta", "Sifre", "Rol"]);
 generator("Kategori", ["Ad", "Slug"]);
 generator("Urun", ["Ad", "Fiyat", "Resim", "Aciklama", "KategoriID"]);
+generator("Todo", ["Icerik", "Tamamlandi"]);
 
 function generator(table, cols) {
   structRows = [];
@@ -73,7 +74,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func ${table}Router(e *echo.Echo) {
+func ${table}Router(e *echo.Group) {
 	e.POST("/${table}", service.${table}Add)
 	e.GET("/${table}", service.${table}List)
 	e.GET("/${table}/:id", service.${table}Get)

@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func KategoriRouter(e *echo.Echo) {
+func KategoriRouter(e *echo.Group) {
 	e.POST("/Kategori", service.KategoriAdd)
 	e.GET("/Kategori", service.KategoriList)
 	e.GET("/Kategori/:id", service.KategoriGet)

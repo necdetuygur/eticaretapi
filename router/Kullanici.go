@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func KullaniciRouter(e *echo.Echo) {
+func KullaniciRouter(e *echo.Group) {
 	e.POST("/Kullanici", service.KullaniciAdd)
 	e.GET("/Kullanici", service.KullaniciList)
 	e.GET("/Kullanici/:id", service.KullaniciGet)
