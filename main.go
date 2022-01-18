@@ -22,10 +22,7 @@ func main() {
 	ec.HideBanner = true
 	ec.Use(middleware.Logger())
 	ec.Use(middleware.Recover())
-	ec.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	}))
+	ec.Use(middleware.CORS())
 
 	// WEB FRAMEWORK AUTH
 	ec.POST("/Login", Login)
